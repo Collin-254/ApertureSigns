@@ -1,10 +1,20 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+
+from backend.speech.speech_to_text import speech_to_text
+from backend.translation.ksl_translator import translate_to_ksl
+from backend.avatar.avatar_engine import generate_avatar_sequence
+
 
 app = FastAPI(
     title="Aperture Signs API",
     description="Real-time sign language accessibility platform",
     version="0.1.0",
 )
+
+
+class PipelineRequest(BaseModel):
+    text: str
 
 
 @app.get("/")
@@ -21,4 +31,21 @@ def health():
     return {
         "status": "healthy",
         "service": "aperture-signs-backend",
+    }
+
+
+@app.post("/pipeline")
+def pipeline(request: PipelineRequest):
+    spoken_text = speech_to_text(request.text)
+
+    translation = translate_to_ksl(spoken_text)
+
+    avatar = generate_avatar_sequence(
+        translation["sign_sequence"]
+    )
+
+    return {
+        "speech": spoken_text,
+        "translation": translation,
+        "avatar": avatar,
     }
