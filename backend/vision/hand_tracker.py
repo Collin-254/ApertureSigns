@@ -511,8 +511,8 @@ def main():
 
     camera = cv2.VideoCapture(0)
 
-    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    camera.set(cv2.CAP_PROP_FRAME_WIDTH, 480)
+    camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 360)
 
     if not camera.isOpened():
         print("ERROR: Could not open camera.")
