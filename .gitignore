@@ -4,3 +4,7 @@ __pycache__/
 .venv312/
 __pycache__/
 *.py[cod]
+
+.DS_Store
+backend/vision/hand_tracker.backup.py
+backend/vision/hand_tracker.broken.py
